@@ -36,7 +36,7 @@ A ny individuals and organizations and not for commercial use, professiona websi
 
         <li>
             <input type="phone" class="phone" name="phone" placeholder="请输手机号" required/>
-            <input type="button" id="sms" onclick="settime(this)" value="免费获取验证码">
+            <input type="button" id="sms" onclick="sendSMS();settime(this)" value="免费获取验证码">
             <div class="clear"></div>
         </li>
         <li>
@@ -101,19 +101,24 @@ A ny individuals and organizations and not for commercial use, professiona websi
         var password1 = $(".password_1").val();
         var password2 = $(".password_2").val();
         var phone = $(".phone").val();
+        var sms_number = $(".sms_num").val();
+
 
         var post_data = {
             "username": username,
             "email": email,
             "password1": password1,
             "password2": password2,
-            "phone": phone
+            "phone": phone,
+            "sms_num": sms_number
         };
         // console.log(post_data);
         $.post("http://127.0.0.1:8000/v1/users", JSON.stringify(post_data),
             function (data) {
                 if (data.code == 200) {
                     alert("成功");
+                    window.localStorage.setItem("dnblog_token", data.data.token);
+                    window.localStorage.setItem("dnblog_user", data.username);
                 } else {
                     alert(data.error);
                 }
@@ -121,6 +126,25 @@ A ny individuals and organizations and not for commercial use, professiona websi
             "json");
     }
 
+    function sendSMS() {
+        var phone = $(".phone").val()
+        var post_data = {"phone": phone}
+        $.ajax({
+            url: "http://127.0.0.1:8000/v1/users/sms",
+            type: "post",
+            data: JSON.stringify(post_data),
+            contentType: "application/json",
+            dataType: "json",
+            success: function (res) {
+                if (res.code == 200) {
+                    alert("已发送")
+                } else {
+                    alert(res.error)
+                }
+            }
+
+        })
+    }
 
 </script>
 
