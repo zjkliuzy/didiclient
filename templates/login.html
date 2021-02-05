@@ -46,8 +46,9 @@ A ny individuals and organizations and not for commercial use, professiona websi
             success: function (res) {
                 if (res.code == 200) {
                     alert("成功");
-                     window.localStorage.setItem("dnblog_token",res.data.token);
-                    window.localStorage.setItem("dnblog_user",res.username);
+                    window.localStorage.setItem("dnblog_token", res.data.token);
+                    window.localStorage.setItem("dnblog_user", res.username);
+                    window.location.href = "/" + res.username + "/topics";
                 } else {
                     alert(res.error)
                 }

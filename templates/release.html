@@ -101,7 +101,9 @@ A ny individuals and organizations and not for commercial use, professiona websi
               $('#button').on('click', function(){
 
                   var content = editor.txt.html()
+				  console.log(content)
                   var content_text = editor.txt.text()
+				  console.log('cont-text:'+content_text)
                   var title = $('.comment_input').val()
 		  var title_after = $('#help_js').text(title).html()
 		 // console.log('111111')
